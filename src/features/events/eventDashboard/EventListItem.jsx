@@ -2,8 +2,12 @@ import React from "react";
 import {Link} from "react-router-dom";
 import { Button, Icon, Item, List, Segment } from "semantic-ui-react";
 import EventListAttendee from "./EventListAttendee";
+import {useDispatch} from 'react-redux';
+import {deleteEvent} from '../eventActions';
 
-export default function EventListItem({ event, selectEvent, deleteEvent }) {
+export default function EventListItem({ event }) {
+const dispatch = useDispatch();
+
   return (
     <Segment.Group>
       <Segment>
@@ -15,8 +19,8 @@ export default function EventListItem({ event, selectEvent, deleteEvent }) {
               src={event.hostPhotoURL}
             ></Item.Image>
             <Item.Content>
-              <Item.Header content='Event Title'></Item.Header>
-              <Item.Description>Hosted by {event.title}</Item.Description>
+              <Item.Header content={event.title}></Item.Header>
+              <Item.Description>Hosted by {event.hostedBy}</Item.Description>
             </Item.Content>
           </Item>
         </Item.Group>
@@ -39,7 +43,7 @@ export default function EventListItem({ event, selectEvent, deleteEvent }) {
       <Segment clearing>
         <span>{event.description}</span>
         <Button
-          onClick={() => deleteEvent(event.id)}
+          onClick={() => dispatch(deleteEvent(event.id))}
           color='red'
           floated='right'
           content='Delete'
